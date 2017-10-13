@@ -1,0 +1,147 @@
+
+.full-height {
+    height: 100vh;
+}
+.logo{
+    display:block;
+    margin:0 auto 15px;
+    width:125px;
+    height:125px;
+    border-radius:8%;
+    border:none;
+    overflow:hidden;
+    background-image:-webkit-linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 50%), url("/img/logo.png");
+    background-image:-moz-linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 50%), url("/img/logo.png");
+    background-image:linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 50%), url("/img/logo.png");
+    background-size: auto, 100%;
+}
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+.panel-heading{
+    font-size: 25px;
+    color:white;
+    opacity: 0.4;
+}
+.login_panel{
+    width:25%;
+    height:50%;
+    position: relative;
+    margin: auto;
+    padding: 60px 60px;
+    background: url("/img/login_bg.jpg") no-repeat   center center #505050;
+    background-color: #5e5d5d;
+    background-size: cover;
+    box-shadow: 0px 30px 60px -5px #000;
+    border-radius:8%;
+}
+.text {
+    border: none;
+    width: 89%;
+    padding: 10px 20px;
+    display: block;
+    height: 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0);
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+.text:focus {
+    outline: 0;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0);
+}
+
+.text:focus + span {
+    opacity: 0.6;
+}
+input[type="email"],
+input[type="password"] {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+}
+input {
+    display: inline-block;
+    font-size: 14px;
+}
+.forget_pwd {
+    text-align: center;
+    display: block;
+    position: relative;
+    text-decoration: none;
+    font-size: 10px;
+    color: white;
+    padding: 10px 0px;
+}
+label {
+    text-transform: uppercase;
+    font-size: 15px;
+    opacity: 0.4;
+    display: inline-block;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    color:white;
+    padding: 5px 0px;
+}
+.signin {
+    background-color: #1161ed;
+    color: #FFF;
+    width: 100%;
+    padding: 10px 20px;
+    display: block;
+    height: 39px;
+    border-radius: 20px;
+    margin-top: 30px;
+    transition: all 0.5s ease-in-out;
+    border: none;
+    text-transform: uppercase;
+}
+
+.signin:hover {
+    background: #4082f5;
+    box-shadow: 0px 4px 35px -5px #4082f5;
+    cursor: pointer;
+}
+
+.signin:focus {
+    outline: none;
+}
+.info_box{
+    padding: 10px 0px;
+}
