@@ -44,7 +44,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    Hi! {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -61,6 +61,9 @@
                                     </li>
                                 </ul>
                             </li>
+                        <li style="border:1px solid #2ca02c;color:#2ca02c;padding:5px 10px;margin-top:8px;border-radius: 8px;">
+                                {{ Auth::user()->position }}
+                        </li>
                         @endif
                     </ul>
                 </div>
