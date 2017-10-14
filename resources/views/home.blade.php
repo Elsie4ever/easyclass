@@ -256,7 +256,6 @@
         });
     </script>
     @else
-    <div>teacher hao!!!</div>
     <ul class="tabs" role="tablist">
         <li>
             <input type="radio" name="tabs" id="tab1" checked />
@@ -270,24 +269,27 @@
                  role="tabpanel"
                  aria-labelledby="description"
                  aria-hidden="false">
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 2</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 3</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
+                    <div class="col-lg-12 addBtn">Add Content
+                    <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
+                    </div>
+                    <ul class="col-lg-12 drop-down closed">
+                        <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
+                        <li class="col-lg-12"><div href="#">About</div></li>
+                        <li class="col-lg-12"><div href="#">Library</div></li>
+                        <li class="col-lg-12"><div href="#">Contact</div></li>
+                    </ul>
+                    <ul class="col-lg-12 drop-down closed">
+                        <li class="col-lg-12"><div class="nav-button">Lecture 2</div></li>
+                        <li class="col-lg-12"><div href="#">About</div></li>
+                        <li class="col-lg-12"><div href="#">Library</div></li>
+                        <li class="col-lg-12"><div href="#">Contact</div></li>
+                    </ul>
+                    <ul class="col-lg-12 drop-down closed">
+                        <li class="col-lg-12"><div class="nav-button">Lecture 3</div></li>
+                        <li class="col-lg-12"><div href="#">About</div></li>
+                        <li class="col-lg-12"><div href="#">Library</div></li>
+                        <li class="col-lg-12"><div href="#">Contact</div></li>
+                    </ul>
             </div>
         </li>
 
