@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <title>easyClass</title>
-<link href="css/addclass.css" rel="stylesheet">
+<link href="/css/addclass.css" rel="stylesheet">
 @section('content')
 <div class="container">
     @if(Auth::user()->position == "Student")
@@ -68,28 +68,11 @@
                 </div>
                 <!--Class name-->
                 <!--need change-->
-                <form method="post" action="/courses">
-                    <input type="text" name="coursername">
-                </form>
+                <form method="post" action="/home">
+                    {{csrf_field()}}
+                    <input type="text" name="coursename">
                 <input type="submit" name="submit">
-                <div class="col-md-10 col-md-offset-2  form-group{{ $errors->has('lecturename') ? ' has-error' : '' }}" id="lectureName">
-                    <div for="lecturename" class="col-md-2 control-label">Class Name</div>
-
-                    <div class="col-md-8">
-                        <input id="lecturename" type="text" class="form-control" name="lecturename" value="{{ old('lecturename') }}">
-
-                        @if ($errors->has('lecturename'))
-                        <span class="help-block">
-                                        <strong>{{ $errors->first('lecturename') }}</strong>
-                                    </span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-lg-12" style="text-align: center;margin:50px 20px;">
-                    <a class="submit_add" href="{{ url('/home') }}" type="submit">
-                        Submit
-                    </a>
-                </div>
+                </form>
             </div>
         </li>
     </ul>

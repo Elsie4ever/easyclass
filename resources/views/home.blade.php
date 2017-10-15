@@ -272,9 +272,16 @@
                     <div class="col-lg-12 addBtn">Create Class
                         <a href="{{ url('/addclass') }}"><image src="/img/add.png" style="height: 50px"/></a>
                     </div>
-                    <div class="col-lg-12 addBtn">Add Content
-                    <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
-                    </div>
+
+                    <ul>
+                        @foreach($courses as $course)
+                        <li class="col-lg-12 courses">Course Name:{{$course->coursename}}
+                            <div class="addBtn">Add Content
+                                <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
                     <ul class="col-lg-12 drop-down closed">
                         <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
                         <li class="col-lg-12"><div href="#">About</div></li>

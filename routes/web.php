@@ -75,4 +75,4 @@ Route::get('/topics',function(){
        echo $topic->topicname."<br>";
    }
 });
-Route::resource('/class','ClassController');
+Route::resource('/home','ClassController');
