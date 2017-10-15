@@ -1,3 +1,6 @@
+<?php
+use App\Course;
+?>
 @extends('layouts.app')
 <title>easyClass</title>
 <link href="css/home.css" rel="stylesheet">
@@ -274,12 +277,14 @@
                     </div>
 
                     <ul>
-                        @foreach($courses as $course)
-                        <li class="col-lg-12 courses">Course Name:{{$course->coursename}}
+                        @foreach($user_courses as $user_course)
+                        @if($user_course->user_id==Auth::user()->id)
+                        <li class="col-lg-12 courses">Course Name:{{Course::where('id',$user_course->course_id)->first()->coursename}}
                             <div class="addBtn">Add Content
                                 <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
                             </div>
                         </li>
+                        @endif
                         @endforeach
                     </ul>
                     <ul class="col-lg-12 drop-down closed">
