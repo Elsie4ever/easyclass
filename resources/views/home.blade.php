@@ -269,6 +269,9 @@
                  role="tabpanel"
                  aria-labelledby="description"
                  aria-hidden="false">
+                    <div class="col-lg-12 addBtn">Create Class
+                        <a href="{{ url('/addclass') }}"><image src="/img/add.png" style="height: 50px"/></a>
+                    </div>
                     <div class="col-lg-12 addBtn">Add Content
                     <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
                     </div>

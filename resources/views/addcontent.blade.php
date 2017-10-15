@@ -69,17 +69,17 @@
                         <img  src="/img/add.png" style="height: 30px"/>
                     </div>
                 </div>
-                <!--topic name-->
+                <!--lecture name-->
                 <!--need change-->
-                <div class="col-md-10 col-md-offset-2  form-group{{ $errors->has('lastname') ? ' has-error' : '' }}" id="lectureName">
-                    <div for="name" class="col-md-2 control-label">Lecture Name</div>
+                <div class="col-md-10 col-md-offset-2  form-group{{ $errors->has('lecturename') ? ' has-error' : '' }}" id="lectureName">
+                    <div for="lecturename" class="col-md-2 control-label">Lecture Name</div>
 
                     <div class="col-md-8">
-                        <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required>
+                        <input id="lecturename" type="text" class="form-control" name="lecturename" value="{{ old('lecturename') }}">
 
-                        @if ($errors->has('lastname'))
+                        @if ($errors->has('lecturename'))
                         <span class="help-block">
-                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                        <strong>{{ $errors->first('lecturename') }}</strong>
                                     </span>
                         @endif
                     </div>
