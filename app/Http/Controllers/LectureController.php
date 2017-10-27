@@ -15,7 +15,7 @@ class LectureController extends Controller
         $courses =  Course::all();
         $user_courses=UserCourse::all();
         $lectures=Lecture::all();
-        return view('/addcontent',compact('courses'),compact('user_courses'),compact('lectures'));
+        return view('/addcontent',compact('courses','user_courses','lectures'));
     }
     public function create(){
         return view('addcontent');
@@ -32,7 +32,7 @@ class LectureController extends Controller
                 return redirect('/home');
             }
             else{
-                $lectureid = Course::where('lecturename',$request->underlecture)->first()->id;
+                $lectureid = Lecture::where('lecturename',$request->underLecture)->first()->id;
                 $topicname = $request->topicName;
                 Topic::create(['topicname'=>$topicname,'lecture_id'=>$lectureid]);
                 return redirect('/home');

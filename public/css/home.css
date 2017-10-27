@@ -125,6 +125,7 @@ p.link a:hover {
 }
 .nav-button{
     background-color: #375e2f;
+    color: #ecf0f1;
 }
 .drop-down li {
     padding:0px;
@@ -132,9 +133,12 @@ p.link a:hover {
 }
 .drop-down li div {
     display: block;
-    color: #ecf0f1;
     text-decoration: none;
     padding: 10px; /* Larger touch target area */
+}
+.topics{
+    text-align: left;
+    color: black;
 }
 
 .drop-down li:first-child div:after {

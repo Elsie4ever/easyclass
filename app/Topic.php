@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Topic extends Model
 {
     protected $fillable = [
-        'topicname'
+        'topicname','lecture_id'
     ];
 
 }

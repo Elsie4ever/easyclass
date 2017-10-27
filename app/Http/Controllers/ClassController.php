@@ -5,6 +5,7 @@ use App\Course;
 use App\User;
 use App\UserCourse;
 use App\Lecture;
+use App\Topic;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class ClassController extends Controller
         $courses =  Course::all();
         $user_courses=UserCourse::all();
         $lectures=Lecture::all();
-        return view('/home',compact('courses','user_courses','lectures'));
+        $topics=Topic::all();
+        return view('/home',compact('courses','user_courses','lectures','topics'));
     }
     public function create(){
         return view('addClass');

@@ -1,6 +1,7 @@
 <?php
 use App\Course;
 use App\Lecture;
+use App\Topic;
 ?>
 @extends('layouts.app')
 <title>easyClass</title>
@@ -306,6 +307,11 @@ use App\Lecture;
                             @if($lecture->course_id==$user_course->course_id)
                             <ul class="drop-down closed">
                                 <li class="col-lg-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
+                                @foreach($topics as $topic)
+                                @if($lecture->id==$topic->lecture_id)
+                                <li class="col-lg-12"><div class="topics" href="#">Topic: {{$topic->topicname}}</div></li>
+                                @endif
+                                @endforeach
                             </ul>
                             @endif
                             @endforeach

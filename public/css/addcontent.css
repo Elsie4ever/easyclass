@@ -111,3 +111,26 @@ h1 span {
     font-size: 20px;
     border-radius: 5px;
 }
+.text-label{
+    padding:10px 0px;
+}
+.submitBtn{
+    background-color:#375e2f;
+    padding:10px 30px;
+    color: white;
+    box-shadow: none;
+    border-radius: 8px;
+    margin:20px 0px;
+}
+#underlecture1{
+    display: none;
+}
+#underlecture2{
+    display: none;
+}
+#topicname1{
+    display: none;
+}
+#topicname2{
+    display: none;
+}
