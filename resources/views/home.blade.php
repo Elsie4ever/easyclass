@@ -30,7 +30,9 @@ use App\Lecture;
                     <li class="col-lg-12 courses">Course Name:{{Course::where('id',$user_course->course_id)->first()->coursename}}
                         @foreach($lectures as $lecture)
                         @if($lecture->course_id==$user_course->course_id)
-                        <div>Lecture: {{Lecture::where('course_id',$user_course->course_id)->first()->lecturename}}</div>
+                        <ul class="drop-down closed">
+                            <li class="col-lg-12"><div class="nav-button">Lecture: {{Lecture::where('course_id',$user_course->course_id)->first()->lecturename}}</div></li>
+                        </ul>
                         @endif
                         @endforeach
                     </li>
@@ -302,7 +304,9 @@ use App\Lecture;
                             </div>
                             @foreach($lectures as $lecture)
                             @if($lecture->course_id==$user_course->course_id)
-                            <div>Lecture: {{Lecture::where('course_id',$user_course->course_id)->first()->lecturename}}</div>
+                            <ul class="drop-down closed">
+                                <li class="col-lg-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
+                            </ul>
                             @endif
                             @endforeach
                         </li>
@@ -310,7 +314,7 @@ use App\Lecture;
                         @endforeach
                     </ul>
                     <ul class="col-lg-12 drop-down closed">
-                        <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
+                        <li class="col-lg-12"><div class="nav-button">Lecture</div></li>
                         <li class="col-lg-12"><div href="#">About</div></li>
                         <li class="col-lg-12"><div href="#">Library</div></li>
                         <li class="col-lg-12"><div href="#">Contact</div></li>
