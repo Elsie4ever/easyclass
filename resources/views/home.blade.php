@@ -1,5 +1,6 @@
 <?php
 use App\Course;
+use App\Lecture;
 ?>
 @extends('layouts.app')
 <title>easyClass</title>
@@ -27,9 +28,11 @@ use App\Course;
                     @foreach($user_courses as $user_course)
                     @if($user_course->user_id==Auth::user()->id)
                     <li class="col-lg-12 courses">Course Name:{{Course::where('id',$user_course->course_id)->first()->coursename}}
-                        <div class="addBtn">Add Content
-                            <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
-                        </div>
+                        @foreach($lectures as $lecture)
+                        @if($lecture->course_id==$user_course->course_id)
+                        <div>Lecture: {{Lecture::where('course_id',$user_course->course_id)->first()->lecturename}}</div>
+                        @endif
+                        @endforeach
                     </li>
                     @endif
                     @endforeach
@@ -297,6 +300,11 @@ use App\Course;
                             <div class="addBtn">Add Content
                                 <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
                             </div>
+                            @foreach($lectures as $lecture)
+                            @if($lecture->course_id==$user_course->course_id)
+                            <div>Lecture: {{Lecture::where('course_id',$user_course->course_id)->first()->lecturename}}</div>
+                            @endif
+                            @endforeach
                         </li>
                         @endif
                         @endforeach

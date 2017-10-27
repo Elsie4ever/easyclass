@@ -12,7 +12,7 @@ class Lecture extends Model
     //protected $primaryKey = 'name_of_id';
     protected $dates = ['deleted_at'];
     protected $fillable = [
-        'lecturename'
+        'lecturename','course_id'
     ];
 
     public function topics(){
