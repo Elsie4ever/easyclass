@@ -1,3 +1,6 @@
+<?php
+use App\Course;
+?>
 @extends('layouts.app')
 <title>easyClass</title>
 <link href="/css/addclass.css" rel="stylesheet">
@@ -17,24 +20,20 @@
                  role="tabpanel"
                  aria-labelledby="description"
                  aria-hidden="false">
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 2</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 3</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
+                <div class="col-lg-12 addcontent">
+                    <p>Add Class</p>
+                </div>
+                <!--Class name-->
+                <!--need change-->
+                <form method="post" action="/home">
+                    {{csrf_field()}}
+                    <select type="text" class="form-control"  name="coursenameStudent">
+                        @foreach($courses as $course)
+                        <option>{{Course::where('id',$course->id)->first()->coursename}}</option>
+                        @endforeach
+                    </select>
+                    <input type="submit" name="submit">
+                </form>
             </div>
         </li>
     </ul>

@@ -20,6 +20,20 @@ use App\Course;
                  role="tabpanel"
                  aria-labelledby="description"
                  aria-hidden="false">
+                <div class="col-lg-12 addBtn">Add Class
+                    <a href="{{ url('/addclass') }}"><image src="/img/add.png" style="height: 50px"/></a>
+                </div>
+                <ul>
+                    @foreach($user_courses as $user_course)
+                    @if($user_course->user_id==Auth::user()->id)
+                    <li class="col-lg-12 courses">Course Name:{{Course::where('id',$user_course->course_id)->first()->coursename}}
+                        <div class="addBtn">Add Content
+                            <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
+                        </div>
+                    </li>
+                    @endif
+                    @endforeach
+                </ul>
                 <ul class="drop-down closed">
                     <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
                     <li class="col-lg-12"><div href="#">About</div></li>

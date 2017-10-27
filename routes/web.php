@@ -76,3 +76,4 @@ Route::get('/topics',function(){
    }
 });
 Route::resource('/home','ClassController');
+Route::get('/addclass','ClassController@addclass');
