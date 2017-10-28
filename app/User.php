@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Understand;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'lastname', 'position','email', 'password','school','studentid'
     ];
-
+    public function understands(){
+        return $this->hasMany('App\Understand');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

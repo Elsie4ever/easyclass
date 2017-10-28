@@ -79,3 +79,7 @@ Route::resource('/home','ClassController');
 Route::resource('/addcontent','LectureController');
 Route::get('/addclass','ClassController@addclass');
 Route::get('/addcontent','LectureController@index');
+Route::post('/understand',[
+    'uses' => 'TopicController@topicLikeTopic',
+    'as' => 'understand'
+]);

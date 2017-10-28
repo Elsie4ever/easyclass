@@ -2,6 +2,7 @@
 use App\Course;
 use App\Lecture;
 use App\Topic;
+use App\Understand;
 ?>
 @extends('layouts.app')
 <title>easyClass</title>
@@ -28,35 +29,26 @@ use App\Topic;
                 <ul>
                     @foreach($user_courses as $user_course)
                     @if($user_course->user_id==Auth::user()->id)
-                    <li class="col-lg-12 courses">Course Name:{{Course::where('id',$user_course->course_id)->first()->coursename}}
+                    <li class="col-lg-12">
+                        <div class="col-lg-6 courses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
                         @foreach($lectures as $lecture)
                         @if($lecture->course_id==$user_course->course_id)
-                        <ul class="drop-down closed">
-                            <li class="col-lg-12"><div class="nav-button">Lecture: {{Lecture::where('course_id',$user_course->course_id)->first()->lecturename}}</div></li>
+                        <ul class="drop-down closed col-lg-12">
+                            <li class="col-lg-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
+                            @foreach($topics as $topic)
+                            @if($lecture->id==$topic->lecture_id)
+                            <li class="col-lg-12 topicDiv" data-topicid="{{$topic->id}}">
+                                <div class="col-lg-6 topics" href="#">Topic: {{$topic->topicname}}</div>
+                                <button type="button" class="js-like-button like-btn" id="questionBtn"><img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; {{ Auth::user()->understands()->where('topic_id', $topic->id)->first() ? Auth::user()->understands()->where('topic_id', $topic->id)->first()->understand == 1 ? 'Cancel Request' : 'I don\'t understand' : 'I don\'t understand'  }}</button>
+                            </li>
+                            @endif
+                            @endforeach
                         </ul>
                         @endif
                         @endforeach
                     </li>
                     @endif
                     @endforeach
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 1</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 2</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
-                </ul>
-                <ul class="drop-down closed">
-                    <li class="col-lg-12"><div class="nav-button">Lecture 3</div></li>
-                    <li class="col-lg-12"><div href="#">About</div></li>
-                    <li class="col-lg-12"><div href="#">Library</div></li>
-                    <li class="col-lg-12"><div href="#">Contact</div></li>
                 </ul>
             </div>
         </li>
@@ -299,17 +291,21 @@ use App\Topic;
                     <ul>
                         @foreach($user_courses as $user_course)
                         @if($user_course->user_id==Auth::user()->id)
-                        <li class="col-lg-12 courses">Course Name:{{Course::where('id',$user_course->course_id)->first()->coursename}}
-                            <div class="addBtn">Add Content
-                                <a href="{{ url('/addcontent') }}"><image src="/img/add.png" style="height: 50px"/></a>
+                        <li class="col-lg-12">
+                            <div class="col-lg-6 coursescourses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
+                            <div class="col-lg-6 addBtn">Add Content
+                                <a href="{{ url('/addcontent') }}"><image src="/img/small-add.png" style="height: 30px"/></a>
                             </div>
                             @foreach($lectures as $lecture)
                             @if($lecture->course_id==$user_course->course_id)
-                            <ul class="drop-down closed">
+                            <ul class="drop-down closed col-lg-12">
                                 <li class="col-lg-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
                                 @foreach($topics as $topic)
                                 @if($lecture->id==$topic->lecture_id)
-                                <li class="col-lg-12"><div class="topics" href="#">Topic: {{$topic->topicname}}</div></li>
+                                <li class="col-lg-12 topicDiv">
+                                    <div class="col-lg-6 topics" href="#">Topic: {{$topic->topicname}}</div>
+                                    <div class="col-lg-6 understand">{{Understand::where('understand',1)->where('topic_id',$topic->id)->count()}} Student don't understand</div>
+                                </li>
                                 @endif
                                 @endforeach
                             </ul>
@@ -318,24 +314,6 @@ use App\Topic;
                         </li>
                         @endif
                         @endforeach
-                    </ul>
-                    <ul class="col-lg-12 drop-down closed">
-                        <li class="col-lg-12"><div class="nav-button">Lecture</div></li>
-                        <li class="col-lg-12"><div href="#">About</div></li>
-                        <li class="col-lg-12"><div href="#">Library</div></li>
-                        <li class="col-lg-12"><div href="#">Contact</div></li>
-                    </ul>
-                    <ul class="col-lg-12 drop-down closed">
-                        <li class="col-lg-12"><div class="nav-button">Lecture 2</div></li>
-                        <li class="col-lg-12"><div href="#">About</div></li>
-                        <li class="col-lg-12"><div href="#">Library</div></li>
-                        <li class="col-lg-12"><div href="#">Contact</div></li>
-                    </ul>
-                    <ul class="col-lg-12 drop-down closed">
-                        <li class="col-lg-12"><div class="nav-button">Lecture 3</div></li>
-                        <li class="col-lg-12"><div href="#">About</div></li>
-                        <li class="col-lg-12"><div href="#">Library</div></li>
-                        <li class="col-lg-12"><div href="#">Contact</div></li>
                     </ul>
             </div>
         </li>

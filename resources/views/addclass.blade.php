@@ -69,8 +69,10 @@ use App\Course;
                 <!--need change-->
                 <form method="post" action="/home">
                     {{csrf_field()}}
-                    <input type="text" name="coursename">
-                <input type="submit" name="submit">
+                    <input type="text" class="form-control" name="coursename">
+                    <div style="text-align: center">
+                        <input class="submitBtn" type="submit" name="submit">
+                    </div>
                 </form>
             </div>
         </li>

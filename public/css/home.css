@@ -77,6 +77,7 @@ h1 span {
     top: 53px;
     left: 0;
     background: white;
+    margin-bottom: 10%;
 }
 .tabs [id^="tab"]:checked + label {
     top: 0;
@@ -121,26 +122,34 @@ p.link a:hover {
     /*  When toggled via jQuery this class will reduce the height of the ul which inconjuction
         with overflow: hidden set on the ul will hide all list items apart from the first */
     /* current li height 38px + 5px border */
-    height: 43px;
+    height: 46px;
 }
 .nav-button{
     background-color: #375e2f;
     color: #ecf0f1;
-}
-.drop-down li {
-    padding:0px;
     border: 1px black solid;
+    padding: 10px;
+    display: block;
 }
 .drop-down li div {
     display: block;
-    text-decoration: none;
-    padding: 10px; /* Larger touch target area */
+    text-decoration: none; /* Larger touch target area */
 }
 .topics{
     text-align: left;
-    color: black;
+    color: #375e2f;
+    font-size: 20px;
+    padding:20px;
 }
-
+.understand{
+    font-size: 15px;
+    padding:15px;
+    border:1px solid #636b6f;
+    border-radius: 8px;
+}
+.topicDiv{
+    padding:20px;
+}
 .drop-down li:first-child div:after {
     content: "\25BC";
     float: right;
@@ -354,3 +363,29 @@ p.link a:hover {
     text-align: right;
     padding:20px 0px;
 }
+.courses{
+    font-size: 25px;
+    font-weight: bold;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+.like-btn {
+    background: transparent;
+    border: 1px solid #375e2f;
+    border-radius: 8px;
+    color: #375e2f;
+    font-size: 18px;
+    min-width: 11rem;
+    box-sizing: border-box;
+    text-align: center;
+    padding:0px 10px;
+    line-height: 2;
+}
+.unpress{
+    background: #375e2f;
+    color: white;
+}
+.like-btn__spinner {
+    vertical-align: middle;
+}
+

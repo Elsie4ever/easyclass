@@ -24,7 +24,7 @@ use App\Lecture;
                 </div>
                 <!--type-->
                 <!--need change-->
-                <form class="col-lg-12 col-md-12" method="post" action="/addcontent">
+                <form class="col-lg-12 col-md-12" method="post" action="/addcontent" novalidate>
                     {{csrf_field()}}
                     <div for="position" class="control-label text-label">Type</div>
                     <select onchange="showMe(this);" type="text" class="form-control dropdown_select" name="content_type" required>

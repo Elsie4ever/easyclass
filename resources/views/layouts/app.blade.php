@@ -6,6 +6,7 @@ use App\Course;
 <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
@@ -79,6 +80,33 @@ use App\Course;
     <!-- Scripts -->
     @yield('script')
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
 
+    </script>
+    <script>
+        var token = '{{ Session::token() }}';
+        var urlLike = '{{ route('understand') }}';
+        $('.js-like-button').on('click', function(evt) {
+            evt.preventDefault();
+            var $btn = $(this);
+            var liked = ($btn.text().match(' Cancel Request') === null);
+            var topicId = evt.target.parentNode.dataset['topicid'];
+            console.log(liked);
+            $.ajax({
+                method: 'POST',
+                url:urlLike,
+                data:{liked:liked,topicId:topicId,_token:token}
+            })
+                .done(function(){
+                });
+            $btn.html('<img class="like-btn__spinner" src="http://jxnblk.com/loading/loading-bars.svg" alt="loading"/> Saving');
+                if (liked) {
+                    $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; Cancel Request');
+                } else {
+                    $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; I don\'t understand');
+                }
+
+        });
+    </script>
 </body>
 </html>
