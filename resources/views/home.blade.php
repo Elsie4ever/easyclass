@@ -29,16 +29,16 @@ use App\Understand;
                 <ul>
                     @foreach($user_courses as $user_course)
                     @if($user_course->user_id==Auth::user()->id)
-                    <li class="col-lg-12">
+                    <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="col-lg-6 courses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
                         @foreach($lectures as $lecture)
                         @if($lecture->course_id==$user_course->course_id)
-                        <ul class="drop-down closed col-lg-12">
-                            <li class="col-lg-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
+                        <ul class="drop-down closed col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
                             @foreach($topics as $topic)
                             @if($lecture->id==$topic->lecture_id)
-                            <li class="col-lg-12 topicDiv" data-topicid="{{$topic->id}}">
-                                <div class="col-lg-6 topics" href="#">Topic: {{$topic->topicname}}</div>
+                            <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topicDiv" data-topicid="{{$topic->id}}">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 topics" href="#">Topic: {{$topic->topicname}}</div>
                                 <button type="button" class="js-like-button like-btn" id="questionBtn"><img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; {{ Auth::user()->understands()->where('topic_id', $topic->id)->first() ? Auth::user()->understands()->where('topic_id', $topic->id)->first()->understand == 1 ? 'Cancel Request' : 'I don\'t understand' : 'I don\'t understand'  }}</button>
                             </li>
                             @endif
@@ -291,20 +291,20 @@ use App\Understand;
                     <ul>
                         @foreach($user_courses as $user_course)
                         @if($user_course->user_id==Auth::user()->id)
-                        <li class="col-lg-12">
-                            <div class="col-lg-6 coursescourses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
-                            <div class="col-lg-6 addBtn">Add Content
+                        <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 coursescourses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 addBtn">Add Content
                                 <a href="{{ url('/addcontent') }}"><image src="/img/small-add.png" style="height: 30px"/></a>
                             </div>
                             @foreach($lectures as $lecture)
                             @if($lecture->course_id==$user_course->course_id)
-                            <ul class="drop-down closed col-lg-12">
-                                <li class="col-lg-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
+                            <ul class="drop-down closed col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><div class="nav-button">Lecture: {{$lecture->lecturename}}</div></li>
                                 @foreach($topics as $topic)
                                 @if($lecture->id==$topic->lecture_id)
-                                <li class="col-lg-12 topicDiv">
-                                    <div class="col-lg-6 topics" href="#">Topic: {{$topic->topicname}}</div>
-                                    <div class="col-lg-6 understand">{{Understand::where('understand',1)->where('topic_id',$topic->id)->count()}} Student don't understand</div>
+                                <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topicDiv">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 topics" href="#">Topic: {{$topic->topicname}}</div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 understand">{{Understand::where('understand',1)->where('topic_id',$topic->id)->count()}} Student don't understand</div>
                                 </li>
                                 @endif
                                 @endforeach

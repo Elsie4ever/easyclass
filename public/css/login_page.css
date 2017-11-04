@@ -152,3 +152,15 @@ label {
 .info_box{
     padding: 10px 0px;
 }
+@media screen and (max-width: 1075px) {
+    .login_panel{
+        width:50%;
+        height: auto;
+    }
+}
+@media screen and (max-width: 620px) {
+    .login_panel{
+        width:80%;
+        height: auto;
+    }
+}
