@@ -244,16 +244,21 @@ use App\Understand;
 
                         </div> <!-- end chat-history -->
 
-                        <div class="chat-message clearfix">
-                            <textarea name="message-to-send" id="message-to-send1" placeholder ="Type your message" rows="3"></textarea>
-
+                        <form method="POST" action="/sendMessage">
+                            {{csrf_field()}}
+                            <p>Select Classroom</p>
+                            <select type="text" class="form-control" name="class">
+                                @foreach($courses as $course)
+                                <option data-courseid="{{$course->id}}" >{{Course::where('id',$course->id)->first()->coursename}}</option>
+                                @endforeach
+                            </select>
+                            <input name="msgcontent" id="message-to-send1" placeholder ="Type your message" rows="3">
                             <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
                             <i class="fa fa-file-image-o"></i>
 
-                            <button>Send</button>
-
-                        </div> <!-- end chat-message -->
-
+                            <button class="sendMessage">Send</button>
+                        </form>
+                      <!-- end chat-message -->
                     </div> <!-- end chat -->
                 </div> <!-- end container -->
             </div>
@@ -524,6 +529,24 @@ use App\Understand;
             </div>
         </li>
     </ul>
+<script>
+    var token = '{{ Session::token() }}';
+    var urlLike = '{{ route('sendMessage') }}';
+    $('.sendMessage').on('click', function(evt) {
+        evt.preventDefault();
+        var $btn = $(this);
+        var content = $('#message-to-send1').html();
+        console.log(content);
+        var courseId = evt.target.parentNode.parentNode.childNodes.childNodes.dataset['courseid'];
+        $.ajax({
+            method: 'POST',
+            url:urlLike,
+            data:{content:content,courseId:courseId,_token:token}
+        })
+            .done(function(){
+            });
+    });
+</script>
     <script>
         $(function() {
             // Bind Click event to the drop down navigation button
