@@ -31,7 +31,7 @@ class MessageController extends Controller
             $select['content']=$request->msgcontent;
             $userid=Auth::user()->id;
             Message::create(['user_id'=>$userid,'content'=>$select['content'],'course_id'=>$courseid]);
-            return redirect('/home');
+            return redirect()->back();
 
     }
     public function sendMessage(Request $request){

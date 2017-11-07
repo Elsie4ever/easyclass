@@ -9,4 +9,7 @@ class Course extends Model
     protected $fillable = [
         'coursename'
     ];
+    public function messages(){
+        return $this->hasMany('App\Message');
+    }
 }

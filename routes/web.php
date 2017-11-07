@@ -83,4 +83,5 @@ Route::post('/understand',[
     'uses' => 'TopicController@topicLikeTopic',
     'as' => 'understand'
 ]);
-Route::resource('/sendMessage','MessageController');
+Route::post('/sendMessage','ClassController@sendMessage');
+Route::post('/swithclass','ClassController@switchclass');

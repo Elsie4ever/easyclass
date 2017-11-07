@@ -7,6 +7,7 @@ use App\UserCourse;
 use App\Lecture;
 use App\Topic;
 use App\Understand;
+use App\Message;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -17,8 +18,11 @@ class ClassController extends Controller
         $user_courses=UserCourse::all();
         $lectures=Lecture::all();
         $topics=Topic::all();
+        $currentcourse_id=UserCourse::where('user_id',Auth::user()->id)->first()->course_id;
+        $currentcourse=Course::where('id',$currentcourse_id)->first()->coursename;
         $understands=Understand::all();
-        return view('/home',compact('courses','user_courses','lectures','topics','understands'));
+        $messages=Message::all();
+        return view('/home',compact('courses','currentcourse','user_courses','lectures','topics','understands','messages'));
     }
     public function create(){
         return view('addClass');
@@ -52,4 +56,26 @@ class ClassController extends Controller
             return redirect('/home');
         }
     }
+    public function sendMessage(Request $request){
+        $select = $request->all();
+        $coursename=$request->class;
+        $courseid = Course::where('coursename',$coursename)->first()->id;
+        $select['content']=$request->msgcontent;
+        $userid=Auth::user()->id;
+        Message::create(['user_id'=>$userid,'content'=>$select['content'],'course_id'=>$courseid]);
+        return redirect('/home');
+    }
+    public function switchclass(Request $request){
+        $classroom = $request->switch_class;
+        $courseid = Course::where('coursename',$classroom)->first()->id;
+        $courses =  Course::all();
+        $currentcourse = Course::where('coursename',$classroom)->first()->coursename;
+        $user_courses=UserCourse::all();
+        $lectures=Lecture::all();
+        $topics=Topic::all();
+        $understands=Understand::all();
+        $messages = Message::where('course_id',$courseid)->get();
+        return view('/home',compact('courses','currentcourse','user_courses','lectures','topics','understands','messages'));
+    }
+
 }
