@@ -21,6 +21,9 @@ class User extends Authenticatable
     public function understands(){
         return $this->hasMany('App\Understand');
     }
+    public function courses(){
+        return $this->hasMany('App\UserCourse');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

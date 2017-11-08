@@ -18,8 +18,9 @@ class ClassController extends Controller
         $user_courses=UserCourse::all();
         $lectures=Lecture::all();
         $topics=Topic::all();
-        $currentcourse_id=UserCourse::where('user_id',Auth::user()->id)->first()->course_id;
-        $currentcourse=Course::where('id',$currentcourse_id)->first()->coursename;
+        $users=Auth::user();
+        $currentcourse_id=$users->courses()->first()->course_id;;
+        $currentcourse=$courses->where('id',$currentcourse_id)->first()->coursename;
         $understands=Understand::all();
         $messages=Message::all();
         return view('/home',compact('courses','currentcourse','user_courses','lectures','topics','understands','messages'));
@@ -57,13 +58,28 @@ class ClassController extends Controller
         }
     }
     public function sendMessage(Request $request){
-        $select = $request->all();
-        $coursename=$request->class;
-        $courseid = Course::where('coursename',$coursename)->first()->id;
-        $select['content']=$request->msgcontent;
-        $userid=Auth::user()->id;
-        Message::create(['user_id'=>$userid,'content'=>$select['content'],'course_id'=>$courseid]);
-        return redirect('/home');
+        $send = new Message();
+        $send->course_id = Course::where('coursename',$request->courseId)->first()->id;
+        $send->content = $request->contentmsg;
+        $send->user_id = Auth::user()->id;
+//        $select = $request->all();
+//        $coursename=$request->class;
+//        $courseid = Course::where('coursename',$coursename)->first()->id;
+//        $select['content']=$request->msgcontent;
+//        $userid=Auth::user()->id;
+        try{
+            $send->save();
+        }
+        catch(\Exception $e){
+            // do task when error
+            echo $e->getMessage();   // insert query
+        }
+        $send->save();
+        return response()->json($send);
+    }
+    public function getMessage(){
+        $message = Message::all();
+        return response()->json($message);
     }
     public function switchclass(Request $request){
         $classroom = $request->switch_class;

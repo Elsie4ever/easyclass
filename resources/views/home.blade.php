@@ -66,31 +66,30 @@ use App\Understand;
                  aria-labelledby="specification"
                  aria-hidden="true">
                 <!--to be changed, only ui for now-->
-                <form method="POST" action="/swithclass">
+                <div class="col-lg-12">
+                <form method="POST" action="/swithclass" class="col-lg-12">
                     {{csrf_field()}}
-                    <p>Switch Classroom</p>
+                    <p class="">Switch Classroom</p>
                     <select type="text" class="form-control" name="switch_class">
                         @foreach($courses as $course)
                         <option data-courseid="{{$course->id}}" >{{Course::where('id',$course->id)->first()->coursename}}</option>
                         @endforeach
                     </select>
-                    <button class="sendMessage" id="switchclass">Confirm</button>
-                </form>
+                    <button class="sendMessage col-lg-2 col-md-2" id="switchclass">Confirm</button>
+                </form></div>
                 <div class="container_chat clearfix">
 
                     <div class="chat">
                         <div class="chat-header clearfix">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
-
                             <div class="chat-about">
                                 <div class="chat-with">Chat room for {{$currentcourse}}</div>
-                                <div class="chat-num-messages">already 1 902 messages</div>
+                                <div class="chat-num-messages"></div>
                             </div>
                             <i class="fa fa-star"></i>
                         </div> <!-- end chat-header -->
 
                         <div class="chat-history">
-                            <ul>
+                            <ul class="messageDivv" id="msg">
                                 <li class="clearfix">
                                     <div class="message-data align-right">
                                         <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
@@ -142,6 +141,9 @@ use App\Understand;
                                         <div class="message other-message float-right">
                                             {{$message->content}}
                                         </div>
+                                        <div class="col-lg-12">
+                                            <button class="float-right"><img style="width: 30px;height:auto;" src="img/ques-black.png"/></button>
+                                        </div>
                                     </li>
                                     @else
                                     <li style="width: 100%">
@@ -159,21 +161,64 @@ use App\Understand;
                             </ul>
 
                         </div> <!-- end chat-history -->
-
-                        <form method="POST" action="/sendMessage">
+                        <div>
                             {{csrf_field()}}
-                                <input type="hidden" name="class" value="{{$currentcourse}}" >{{$currentcourse}}
+                                <input type="hidden" name="class" data-class="{{$currentcourse}}" value="{{$currentcourse}}" >
+                                <input type="hidden" name="user" value="{{Auth::user()->id}}" >
                             <input name="msgcontent" id="message-to-send1" placeholder ="Type your message" rows="3">
                             <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
                             <i class="fa fa-file-image-o"></i>
 
                             <button class="sendMessage" id="sendMessage">Send</button>
-                        </form>
+                        </div>
                       <!-- end chat-message -->
                     </div> <!-- end chat -->
                 </div> <!-- end container -->
             </div>
         </li>
+        <script>
+            var urlLike = '{{ route('sendMessage') }}';
+            $(document).ready(function(){
+                setTimeout(realTime,2000);
+            });
+            function realTime(){
+                $.ajax({
+                    type:'post',
+                    url:'/chat/get',
+                    data:{
+                        '_token': $('input[name=_token]').val(),
+                    },
+                    success: function(data){
+                        $('#msg').replaceWith('<ul class="messageDivv" id="msg"></ul>');
+                        for(var i = 0; i < data.length; i++){
+                                $('#msg').append('<li style="width: 100%"><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i></span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message my-message">'+data[i].content+' </div> </li>')
+                        }
+                    }
+                });
+                setTimeout(realTime,2000);
+            }
+        </script>
+        <script>
+            $(document).on('click','#sendMessage', function(evt) {
+                evt.preventDefault();
+                var $btn = $(this);
+                var contentmsg = $('input[name=msgcontent]').val();
+                console.log(contentmsg);
+                var courseId = $('input[name=class]').val();
+                var userId = $('input[name=user]').val();
+                console.log(courseId);
+                $.ajax({
+                    method: 'POST',
+                    url:'/sendMessage',
+                    data:{contentmsg:contentmsg,courseId:courseId,_token:$('input[name=_token]').val(),userId:userId},
+                    success: function(data){
+                        $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i> {{Auth::user()->name}}</span> <span class="message-data-time">'+data.created_at+'</span> </div> <div class="message other-message float-right">'+data.content+' </div> </li>')
+                    }
+                });
+                $('input[name=msgcontent]').val('');
+
+            });
+        </script>
     </ul>
     <script>
         $(function() {
@@ -186,6 +231,7 @@ use App\Understand;
 
         });
     </script>
+
     @else
     <ul class="tabs" role="tablist">
         <li>
@@ -450,8 +496,50 @@ use App\Understand;
                 </div> <!-- end container -->
             </div>
         </li>
-    </ul>
+        <script>
+            var urlLike = '{{ route('sendMessage') }}';
+            $(document).ready(function(){
+                setTimeout(realTime,2000);
+            });
+            function realTime(){
+                $.ajax({
+                    type:'post',
+                    url:'/chat/get',
+                    data:{
+                        '_token': $('input[name=_token]').val(),
+                    },
+                    success: function(data){
+                        $('#msg').replaceWith('<ul class="messageDivv" id="msg"></ul>');
+                        for(var i = 0; i < data.length; i++){
+                            $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i> {{Auth::user()->name}}</span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message other-message float-right">'+data[i].content+' </div> </li>')
+                        }
+                    }
+                });
+                setTimeout(realTime,2000);
+            }
+        </script>
+        <script>
+            $(document).on('click','#sendMessage', function(evt) {
+                evt.preventDefault();
+                var $btn = $(this);
+                var contentmsg = $('input[name=msgcontent]').val();
+                console.log(contentmsg);
+                var courseId = evt.target.dataset['class'];
+                $.ajax({
+                    method: 'POST',
+                    url:'/sendMessage',
+                    data:{contentmsg:contentmsg,courseId:courseId,_token:$('input[name=_token]').val()},
+                    success: function(data){
+                        $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i> {{Auth::user()->name}}</span> <span class="message-data-time">'+data.created_at+'</span> </div> <div class="message other-message float-right">'+data.content+' </div> </li>')
+                    }
+                });
+                $('input[name=msgcontent]').val('');
 
+            });
+        </script>
+    </ul>
+    @section('script')
+    @stop
     <script>
         $(function() {
             // Bind Click event to the drop down navigation button

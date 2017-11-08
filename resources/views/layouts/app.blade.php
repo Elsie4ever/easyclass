@@ -81,9 +81,6 @@ use App\Course;
     @yield('script')
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
-
-    </script>
-    <script>
         var token = '{{ Session::token() }}';
         var urlLike = '{{ route('understand') }}';
         $('.js-like-button').on('click', function(evt) {
@@ -108,5 +105,6 @@ use App\Course;
 
         });
     </script>
+
 </body>
 </html>

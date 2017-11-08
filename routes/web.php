@@ -83,5 +83,12 @@ Route::post('/understand',[
     'uses' => 'TopicController@topicLikeTopic',
     'as' => 'understand'
 ]);
-Route::post('/sendMessage','ClassController@sendMessage');
+Route::post('/sendMessage',[
+    'uses' => 'ClassController@sendMessage',
+    'as' => 'sendMessage'
+]);
 Route::post('/swithclass','ClassController@switchclass');
+Route::post('/chat/get',[
+    'uses' => 'ClassController@getMessage',
+    'as' => 'getMessage'
+]);
