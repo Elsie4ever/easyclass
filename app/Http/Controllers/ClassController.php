@@ -19,11 +19,21 @@ class ClassController extends Controller
         $lectures=Lecture::all();
         $topics=Topic::all();
         $users=Auth::user();
-        $currentcourse_id=$users->courses()->first()->course_id;;
-        $currentcourse=$courses->where('id',$currentcourse_id)->first()->coursename;
+        foreach($user_courses as $user_course){
+            if($user_course->user_id == $users->id){
+                $currentcourse_id=$users->courses()->first()->course_id;
+                $currentcourse=$courses->where('id',$currentcourse_id)->first()->coursename;
+            }
+            else{
+                $currentcourse_id=-1;
+                $currentcourse='';
+            }
+        }
+            //$currentcourse_id=$users->courses()->first()->course_id;
+        //$currentcourse=$courses->where('id',$currentcourse_id)->first()->coursename;
         $understands=Understand::all();
         $messages=Message::all();
-        return view('/home',compact('courses','currentcourse','user_courses','lectures','topics','understands','messages'));
+        return view('/home',compact('courses','currentcourse','$currentcourse_id','user_courses','lectures','topics','understands','messages'));
     }
     public function create(){
         return view('addClass');
@@ -86,12 +96,13 @@ class ClassController extends Controller
         $courseid = Course::where('coursename',$classroom)->first()->id;
         $courses =  Course::all();
         $currentcourse = Course::where('coursename',$classroom)->first()->coursename;
+        $currentcourse_id = Course::where('coursename',$classroom)->first()->id;
         $user_courses=UserCourse::all();
         $lectures=Lecture::all();
         $topics=Topic::all();
         $understands=Understand::all();
         $messages = Message::where('course_id',$courseid)->get();
-        return view('/home',compact('courses','currentcourse','user_courses','lectures','topics','understands','messages'));
+        return view('/home',compact('courses','currentcourse','$currentcourse_id','user_courses','lectures','topics','understands','messages'));
     }
 
 }

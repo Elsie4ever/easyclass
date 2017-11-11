@@ -71,14 +71,16 @@ use App\Understand;
                     {{csrf_field()}}
                     <p class="">Switch Classroom</p>
                     <select type="text" class="form-control" name="switch_class">
-                        @foreach($courses as $course)
-                        <option data-courseid="{{$course->id}}" >{{Course::where('id',$course->id)->first()->coursename}}</option>
+                        @foreach($user_courses as $user_course)
+                        @if($user_course->user_id==Auth::user()->id)
+                        <option data-courseid="{{$user_course->course_id}}" >{{Course::where('id',$user_course->course_id)->first()->coursename}}</option>
+                        @endif
                         @endforeach
                     </select>
                     <button class="sendMessage col-lg-2 col-md-2" id="switchclass">Confirm</button>
                 </form></div>
                 <div class="container_chat clearfix">
-
+                    @if($currentcourse!='')
                     <div class="chat">
                         <div class="chat-header clearfix">
                             <div class="chat-about">
@@ -90,48 +92,8 @@ use App\Understand;
 
                         <div class="chat-history">
                             <ul class="messageDivv" id="msg">
-                                <li class="clearfix">
-                                    <div class="message-data align-right">
-                                        <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-                                        <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
-
-                                    </div>
-                                    <div class="message other-message float-right">
-                                        Hi Vincent, how are you? How is the project coming along?
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="message-data">
-                                        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-                                        <span class="message-data-time">10:12 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">
-                                        Are we meeting today? Project has been already finished and I have results to show you.
-                                    </div>
-                                </li>
-
-                                <li class="clearfix">
-                                    <div class="message-data align-right">
-                                        <span class="message-data-time" >10:14 AM, Today</span> &nbsp; &nbsp;
-                                        <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
-
-                                    </div>
-                                    <div class="message other-message float-right">
-                                        Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced any problems at the last phase of the project?
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="message-data">
-                                        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-                                        <span class="message-data-time">10:20 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">
-                                        Actually everything was fine. I'm very excited to show this to our team.
-                                    </div>
-                                </li>
                                 @foreach($messages as $message)
+                                @if(Course::where('id',$message->course_id)->first()->coursename==$currentcourse)
                                     @if(Auth::user()->name == Auth::user()->where('id',$message->user_id)->first()->name)
                                     <li style="width: 100%">
                                         <div class="message-data align-right">
@@ -156,6 +118,7 @@ use App\Understand;
                                         </div>
                                     </li>
                                     @endif
+                                @endif
                                 @endforeach
 
                             </ul>
@@ -173,6 +136,7 @@ use App\Understand;
                         </div>
                       <!-- end chat-message -->
                     </div> <!-- end chat -->
+                    @endif
                 </div> <!-- end container -->
             </div>
         </li>
@@ -191,8 +155,14 @@ use App\Understand;
                     success: function(data){
                         $('#msg').replaceWith('<ul class="messageDivv" id="msg"></ul>');
                         for(var i = 0; i < data.length; i++){
-                                $('#msg').append('<li style="width: 100%"><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i></span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message my-message">'+data[i].content+' </div> </li>')
+                            console.log(data[i].course_id=='{{Course::where('coursename',$currentcourse)->first()->id}}');
+                            if(data[i].course_id=='{{Course::where('coursename',$currentcourse)->first()->id}}'){
+                                $('#msg').append('<li style="width: 100%"><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i></span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message my-message">'+data[i].content+' </div> </li>');
+                            }
+
                         }
+
+
                     }
                 });
                 setTimeout(realTime,2000);
@@ -511,7 +481,10 @@ use App\Understand;
                     success: function(data){
                         $('#msg').replaceWith('<ul class="messageDivv" id="msg"></ul>');
                         for(var i = 0; i < data.length; i++){
-                            $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i> {{Auth::user()->name}}</span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message other-message float-right">'+data[i].content+' </div> </li>')
+                            if({{$currentcourse}}=={{$message->where('course_id',$currentcourse_id)}}){
+                                $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i> {{Auth::user()->name}}</span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message other-message float-right">'+data[i].content+' </div> </li>')
+                            }
+
                         }
                     }
                 });
