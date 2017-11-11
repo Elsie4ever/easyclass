@@ -229,9 +229,10 @@ p.link a:hover {
 .chat .chat-header .chat-with {
     font-weight: bold;
     font-size: 16px;
+    color: white;
 }
 .chat .chat-header .chat-num-messages {
-    color: #92959E;
+    color: white;
 }
 .chat .chat-header .fa-star {
     float: right;
@@ -385,4 +386,24 @@ p.link a:hover {
 .like-btn__spinner {
     vertical-align: middle;
 }
+.msgUnderstand{
+    display: block;
+    text-align: center;
+    background: transparent;
+    box-shadow: none;
+    padding: 0px 0px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+.chat-header{
+    background-color: #2e3436;
+    padding:20px;
+    border-radius: 10px 10px 0px 0px
 
+}

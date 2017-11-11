@@ -8,6 +8,7 @@ use App\Lecture;
 use App\Topic;
 use App\Understand;
 use App\Message;
+use App\Msgunderstd;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -104,5 +105,34 @@ class ClassController extends Controller
         $messages = Message::where('course_id',$courseid)->get();
         return view('/home',compact('courses','currentcourse','$currentcourse_id','user_courses','lectures','topics','understands','messages'));
     }
-
+    public function understandMessage(Request $request){
+        $message_id=$request['messageId'];
+        $liked=$request['liked']==='true'?true:false;
+        $update = false;
+        $message = Message::find($message_id);
+        if(!$message){
+            return null;
+        }
+        $user = Auth::user();
+        $dontUnderstand = $user->msgunderstands()->where('message_id',$message_id)->first();
+        if($dontUnderstand){
+            $already_dontUnderstand = $dontUnderstand->buttonPressed;
+            $update = true;
+            if($already_dontUnderstand == $liked){
+                $dontUnderstand->delete();
+                return null;
+            }
+        }else{
+            $dontUnderstand = new Msgunderstd();
+        }
+        $dontUnderstand->buttonPressed = $liked;
+        $dontUnderstand->user_id=$user->id;
+        $dontUnderstand->message_id=$message->id;
+        if($update){
+            $dontUnderstand->update();
+        }else{
+            $dontUnderstand->save();
+        }
+        return null;
+    }
 }

@@ -105,6 +105,30 @@ use App\Course;
 
         });
     </script>
+    <script>
+        var token = '{{ Session::token() }}';
+        var urlLike = '{{ route('understandMsg') }}';
+        $('.understandimg').on('click', function(evt) {
+            evt.preventDefault();
+            var $btn = $(this);
+            //$('.key').attr('src','/img/key.png')
+            var liked = ($btn.attr("src") === '/img/ques-red.png');
+            var messageId = evt.target.parentNode.parentNode.dataset['messageid'];
+            console.log(liked);
+            $.ajax({
+                method: 'POST',
+                url:urlLike,
+                data:{liked:liked,messageId:messageId,_token:token}
+            })
+                .done(function(){
+                });
+            if (liked) {
+                $btn.attr('src','/img/ques-black.png');
+            } else {
+                $btn.attr('src','/img/ques-red.png');
+            }
 
+        });
+    </script>
 </body>
 </html>

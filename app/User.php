@@ -21,6 +21,9 @@ class User extends Authenticatable
     public function understands(){
         return $this->hasMany('App\Understand');
     }
+    public function msgunderstands(){
+        return $this->hasMany('App\Msgunderstd');
+    }
     public function courses(){
         return $this->hasMany('App\UserCourse');
     }
