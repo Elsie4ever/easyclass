@@ -134,15 +134,15 @@ use App\Msgunderstd;
                             </ul>
 
                         </div> <!-- end chat-history -->
-                        <div>
+                        <div style="background-color: #2e3436;padding:20px;border-radius: 0px 0px 10px 10px">
                             {{csrf_field()}}
                                 <input type="hidden" name="class" data-class="{{$currentcourse}}" value="{{$currentcourse}}" >
                                 <input type="hidden" name="user" value="{{Auth::user()->id}}" >
-                            <input name="msgcontent" id="message-to-send1" placeholder ="Type your message" rows="3">
+                            <input name="msgcontent" id="message-to-send1" class="form-control" placeholder ="Type your message" rows="3">
                             <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
                             <i class="fa fa-file-image-o"></i>
 
-                            <button class="sendMessage" id="sendMessage">Send</button>
+                            <button class="sendMessage float-right" id="sendMessage" style="margin-top: 10px">Send</button>
                         </div>
                       <!-- end chat-message -->
                     </div> <!-- end chat -->
@@ -150,34 +150,7 @@ use App\Msgunderstd;
                 </div> <!-- end container -->
             </div>
         </li>
-<!--        <script>-->
-<!--                    var urlLike = '{{ route('sendMessage') }}';-->
-<!--                    $(document).ready(function(){-->
-<!--                        setTimeout(realTime,10000);-->
-<!--                    });-->
-<!--                    function realTime(){-->
-<!--                        $.ajax({-->
-<!--                            type:'post',-->
-<!--                            url:'/chat/get',-->
-<!--                            data:{-->
-<!--                                '_token': $('input[name=_token]').val(),-->
-<!--                            },-->
-<!--                            success: function(data){-->
-<!--                                $('#msg').replaceWith('<ul class="messageDivv" id="msg"></ul>');-->
-<!--                                for(var i = 0; i < data.length; i++){-->
-<!--                                    if(data[i].course_id=='{{Course::where('coursename',$currentcourse)->first()->id}}'){-->
-<!--                                        $('#msg').append('<li style="width: 100%"><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i></span> <span class="message-data-time">'+data[i].created_at+'</span> </div> <div class="message my-message">'+data[i].content+' </div> <div class="col-lg-12" data-messageid="{{$message->id}}">@if( Auth::user()->msgunderstands()->where('message_id',$message->id)->first()) ' +-->
-<!--                                        '<button class="float-right msgUnderstand"><img class="understandimg" style="width: 30px;height:auto;" src="img/ques-red.png"/></button>@else<button class="float-right msgUnderstand"><img class="understandimg" style="width: 30px;height:auto;" src="img/ques-black.png"/></button>@endif </div></li>');-->
-<!--                                    }-->
-<!---->
-<!--                                }-->
-<!---->
-<!---->
-<!--                            }-->
-<!--                        });-->
-<!--                        setTimeout(realTime,2000);-->
-<!--                    }-->
-<!--                </script>-->
+
        <script>
             $(document).on('click','#sendMessage', function(evt) {
                 evt.preventDefault();
@@ -191,7 +164,7 @@ use App\Msgunderstd;
                     url:'/sendMessage',
                     data:{contentmsg:contentmsg,courseId:courseId,_token:$('input[name=_token]').val(),userId:userId},
                     success: function(data){
-                        $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i> {{Auth::user()->name}}</span> <span class="message-data-time">'+data.created_at+'</span> </div> <div class="message other-message float-right">'+data.content+' </div> </li>')
+                        $('#msg').append('<li style="width: 100%"><div class="message-data align-right"><span class="message-data-name"><i class="fa fa-circle online"></i></span> <span class="message-data-time">'+data.created_at+'</span> </div> <div class="message other-message float-right">'+data.content+' </div> </li>')
                     }
                 });
                 $('input[name=msgcontent]').val('');
