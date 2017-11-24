@@ -30,8 +30,10 @@ use App\Msgunderstd;
                 <ul>
                     @foreach($user_courses as $user_course)
                     @if($user_course->user_id==Auth::user()->id)
+                     @if(Course::where('id',$user_course->course_id)->first()!=null)
                     <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="col-lg-6 courses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
+                        <a class="col-lg-6" href="{{ route('course.delete',['courseid'=>Course::where('id',$user_course->course_id)->first()->id]) }}"><img src="/img/delete.png" class="float-right" style="height: 30px; margin: 20px"/></a>
                         @foreach($lectures as $lecture)
                         @if($lecture->course_id==$user_course->course_id)
                         <ul class="drop-down closed col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -48,12 +50,37 @@ use App\Msgunderstd;
                         @endif
                         @endforeach
                     </li>
+                     @endif
                     @endif
                     @endforeach
                 </ul>
             </div>
         </li>
+        <script>
+            var token = '{{ Session::token() }}';
+            var urlLike = '{{ route('understand') }}';
+            $('.js-like-button').on('click', function(evt) {
+                evt.preventDefault();
+                var $btn = $(this);
+                var liked = ($btn.text().match('Cancel Request') === null);
+                var topicId = evt.target.parentNode.dataset['topicid'];
+                console.log(liked);
+                $.ajax({
+                    method: 'POST',
+                    url:urlLike,
+                    data:{liked:liked,topicId:topicId,_token:token}
+                })
+                    .done(function(){
+                    });
+                $btn.html('<img class="like-btn__spinner" src="http://jxnblk.com/loading/loading-bars.svg" alt="loading"/> Saving');
+                if (liked) {
+                    $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; Cancel Request');
+                } else {
+                    $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; I don\'t understand');
+                }
 
+            });
+        </script>
         <li>
             <input type="radio" name="tabs" id="tab2" href="#tab2"/>
             <label for="tab2"
@@ -74,7 +101,9 @@ use App\Msgunderstd;
                     <select type="text" class="form-control" name="switch_class">
                         @foreach($user_courses as $user_course)
                         @if($user_course->user_id==Auth::user()->id)
+                        @if(Course::where('id',$user_course->course_id)->first()!=null)
                         <option data-courseid="{{$user_course->course_id}}" >{{Course::where('id',$user_course->course_id)->first()->coursename}}</option>
+                        @endif
                         @endif
                         @endforeach
                     </select>
@@ -104,7 +133,7 @@ use App\Msgunderstd;
                                             {{$message->content}}
                                         </div>
                                         <div class="col-lg-12" data-messageid="{{$message->id}}">
-                                            @if( Auth::user()->msgunderstands()->where('message_id',$message->id)->first())
+                                            @if( Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->first())
                                             <button class="float-right msgUnderstand"><img class="understandimg" style="width: 30px;height:auto;" src="img/ques-red.png"/></button>
                                             @else
                                             <button class="float-right msgUnderstand"><img class="understandimg" style="width: 30px;height:auto;" src="img/ques-black.png"/></button>
@@ -120,7 +149,7 @@ use App\Msgunderstd;
                                             {{$message->content}}
                                         </div>
                                         <div class="col-lg-12" data-messageid="{{$message->id}}">
-                                            @if( Auth::user()->msgunderstands()->where('message_id',$message->id)->first())
+                                            @if( Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->first())
                                             <button class="float-left msgUnderstand"><img class="understandimg" style="width: 30px;height:auto;" src="img/ques-red.png"/></button>
                                             @else
                                             <button class="float-left msgUnderstand"><img class="understandimg" style="width: 30px;height:auto;" src="img/ques-black.png"/></button>
@@ -150,7 +179,6 @@ use App\Msgunderstd;
                 </div> <!-- end container -->
             </div>
         </li>
-
        <script>
             $(document).on('click','#sendMessage', function(evt) {
                 evt.preventDefault();
@@ -206,8 +234,10 @@ use App\Msgunderstd;
                         @foreach($user_courses as $user_course)
                         @if($user_course->user_id==Auth::user()->id)
                         <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 coursescourses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 addBtn">Add Content
+                            @if(Course::where('id',$user_course->course_id)->first()!=null)
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 courses coursescourses">Course Name: {{Course::where('id',$user_course->course_id)->first()->coursename}}</div>
+                            <a class="col-lg-3" href="{{ route('course.delete',['courseid'=>Course::where('id',$user_course->course_id)->first()->id]) }}"><img src="/img/delete.png" class="float-right" style="height: 30px; margin: 20px"/></a>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 addBtn">Add Content
                                 <a href="{{ url('/addcontent') }}"><image src="/img/small-add.png" style="height: 30px"/></a>
                             </div>
                             @foreach($lectures as $lecture)
@@ -225,6 +255,7 @@ use App\Msgunderstd;
                             </ul>
                             @endif
                             @endforeach
+                            @endif
                         </li>
                         @endif
                         @endforeach
@@ -252,7 +283,9 @@ use App\Msgunderstd;
                         <select type="text" class="form-control" name="switch_class">
                             @foreach($user_courses as $user_course)
                             @if($user_course->user_id==Auth::user()->id)
+                            @if(Course::where('id',$user_course->course_id)->first()!=null)
                             <option data-courseid="{{$user_course->course_id}}" >{{Course::where('id',$user_course->course_id)->first()->coursename}}</option>
+                            @endif
                             @endif
                             @endforeach
                         </select>
@@ -264,6 +297,25 @@ use App\Msgunderstd;
                         <div class="chat-header clearfix">
                             <div class="chat-about">
                                 <div class="chat-with">Chat room for {{$currentcourse}}</div>
+                                <a href="#myPopup" data-rel="popup" class="signin-btn ui-btn ui-btn-inline ui-corner-all">Top Questions</a>
+                                <div data-role="popup" id="myPopup" class="ui-content">
+                                    <div class="popup-content">
+                                            <ul>
+                                                <li style="background-color: #2b542c; color: white">
+                                                Top Question
+                                                <span class="close" title="Close Modal">&times;</span>
+                                                <li>
+                                                @foreach($messages as $message)
+                                                    @if(Course::where('id',$message->course_id)->first()->coursename==$currentcourse && Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->count()>0)
+                                                    <li>
+                                                        {{$message->content}}
+                                                        <p style="color: red">{{Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->count()}} student don't understand this</p>
+                                                    </li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                    </div>
+                                </div>
                                 <div class="chat-num-messages"></div>
                             </div>
                             <i class="fa fa-star"></i>
@@ -281,9 +333,9 @@ use App\Msgunderstd;
                                     <div class="message other-message float-right">
                                         {{$message->content}}
                                     </div>
-                                    @if(Msgunderstd::where('buttonPressed',0)->where('message_id',$message->id)->count()>0)
+                                    @if(Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->count()>0)
                                     <div class="col-lg-12 float-right" style="color:red" data-messageid="{{$message->id}}">
-                                        {{Msgunderstd::where('buttonPressed',0)->where('message_id',$message->id)->count()}} student don't understand this
+                                        <p class="float-right">{{Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->count()}} student don't understand this</p>
                                     </div>
                                     @endif
                                 </li>
@@ -295,9 +347,9 @@ use App\Msgunderstd;
                                     <div class="message my-message">
                                         {{$message->content}}
                                     </div>
-                                    @if(Msgunderstd::where('buttonPressed',0)->where('message_id',$message->id)->count()>0)
-                                    <div class="col-lg-12 float-right" style="color:red" data-messageid="{{$message->id}}">
-                                        {{Msgunderstd::where('buttonPressed',0)->where('message_id',$message->id)->count()}} student don't understand this
+                                    @if(Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->count()>0)
+                                    <div class="col-lg-12 " style="color:red" data-messageid="{{$message->id}}">
+                                        <p class="float-left">{{Msgunderstd::where('buttonPressed',1)->where('message_id',$message->id)->count()}} student don't understand this</p>
                                     </div>
                                     @endif
                                 </li>

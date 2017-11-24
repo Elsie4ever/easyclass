@@ -25,6 +25,7 @@ use App\Lecture;
                 <!--type-->
                 <!--need change-->
                 <form class="col-lg-12 col-md-12" method="post" action="/addcontent" novalidate>
+                    {{csrf_field()}}
                     <div for="position" class="control-label text-label">Type</div>
                     <select onchange="showMe(this);" type="text" class="form-control dropdown_select" name="content_type" required>
                         <option>Lecture</option>
@@ -34,7 +35,9 @@ use App\Lecture;
                     <select type="text" name="underClass" class="form-control" id="underclass2" required>
                         @foreach($user_courses as $user_course)
                         @if($user_course->user_id==Auth::user()->id)
-                        <option>{{Course::where('id',$user_course->course_id)->first()->coursename}}</option>
+                          @if(Course::where('id',$user_course->course_id)->first()!=null)
+                          <option>{{Course::where('id',$user_course->course_id)->first()->coursename}}</option>
+                          @endif
                         @endif
                         @endforeach
                     </select>

@@ -81,53 +81,63 @@ use App\Course;
     @yield('script')
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
-        var token = '{{ Session::token() }}';
-        var urlLike = '{{ route('understand') }}';
-        $('.js-like-button').on('click', function(evt) {
-            evt.preventDefault();
-            var $btn = $(this);
-            var liked = ($btn.text().match(' Cancel Request') === null);
-            var topicId = evt.target.parentNode.dataset['topicid'];
-            console.log(liked);
-            $.ajax({
-                method: 'POST',
-                url:urlLike,
-                data:{liked:liked,topicId:topicId,_token:token}
-            })
-                .done(function(){
-                });
-            $btn.html('<img class="like-btn__spinner" src="http://jxnblk.com/loading/loading-bars.svg" alt="loading"/> Saving');
-                if (liked) {
-                    $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; Cancel Request');
-                } else {
-                    $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; I don\'t understand');
-                }
-
-        });
-    </script>
-    <script>
-        var token = '{{ Session::token() }}';
-        var urlLike = '{{ route('understandMsg') }}';
         $('.understandimg').on('click', function(evt) {
+            var token = '{{ Session::token() }}';
+            var urlLike = '{{ route('understandMsg') }}';
             evt.preventDefault();
             var $btn = $(this);
             //$('.key').attr('src','/img/key.png')
-            var liked = ($btn.attr("src") === '/img/ques-red.png');
+            var liked = ($btn.attr("src") === 'img/ques-black.png');
             var messageId = evt.target.parentNode.parentNode.dataset['messageid'];
             console.log(liked);
             $.ajax({
                 method: 'POST',
                 url:urlLike,
-                data:{liked:liked,messageId:messageId,_token:token}
+                data:{liked:liked,messageId:messageId,_token:token},
             })
                 .done(function(){
                 });
             if (liked) {
-                $btn.attr('src','/img/ques-black.png');
-            } else {
                 $btn.attr('src','/img/ques-red.png');
+            } else {
+                $btn.attr('src','/img/ques-black.png');
             }
 
+        });
+    </script>
+    <script>
+        var tokenn = '{{ Session::token() }}';
+        var urlLike = '{{ route('understand') }}';
+        $('.js-like-button').on('click', function(evt) {
+
+            var $btn = $(this);
+            var likedd = ($btn.text().match('Cancel Request') === null);
+            var topicId = evt.target.parentNode.dataset['topicid'];
+            console.log(likedd);
+            $.ajax({
+                method: 'POST',
+                url:urlLike,
+                data:{likedd:likedd,topicId:topicId,_token:tokenn}
+            })
+                .done(function(){
+                });
+            $btn.html('<img class="like-btn__spinner" src="http://jxnblk.com/loading/loading-bars.svg" alt="loading"/> Saving');
+            if (likedd) {
+                $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; Cancel Request');
+            } else {
+                $btn.html('<img src="/img/question-green.png" style="height: 20px"/>︎&nbsp; I don\'t understand');
+            }
+        });
+    </script>
+    <script>
+        var popup = document.getElementById('myPopup');
+        document.getElementById('myPopup').style.display="none";
+        $('.signin-btn').click(function(){
+            $('.key').attr('src','/img/key-black.png');
+            $('#myPopup').show();
+        });
+        $('.close').click(function(){
+            $('#myPopup').hide();
         });
     </script>
 </body>

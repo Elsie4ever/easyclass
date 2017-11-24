@@ -100,3 +100,7 @@ Route::post('/chat/get',[
     'uses' => 'ClassController@getMessage',
     'as' => 'getMessage'
 ]);
+Route::get('/course-delete/{courseid}',[
+    'uses' => 'ClassController@getDeleteCourse',
+    'as' => 'course.delete'
+]);

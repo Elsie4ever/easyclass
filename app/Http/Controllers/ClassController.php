@@ -22,16 +22,25 @@ class ClassController extends Controller
         $users=Auth::user();
         foreach($user_courses as $user_course){
             if($user_course->user_id == $users->id){
-                $currentcourse_id=$users->courses()->first()->course_id;
-                $currentcourse=$courses->where('id',$currentcourse_id)->first()->coursename;
+                if($users->courses()->first()!=null){
+                    $currentcourse_id=$users->courses()->first()->course_id;
+                    if($users->courses()->where('id',$currentcourse_id)->first()!=null){
+                        $currentcourse=$users->courses()->where('id',$currentcourse_id)->first()->coursename;
+                    }
+                    else{
+                        $currentcourse='';
+                    }
+                }
+               else{
+                   $currentcourse_id='';
+                   $currentcourse='';
+               }
             }
             else{
                 $currentcourse_id=-1;
                 $currentcourse='';
             }
         }
-            //$currentcourse_id=$users->courses()->first()->course_id;
-        //$currentcourse=$courses->where('id',$currentcourse_id)->first()->coursename;
         $understands=Understand::all();
         $messages=Message::all();
         return view('/home',compact('courses','currentcourse','$currentcourse_id','user_courses','lectures','topics','understands','messages'));
@@ -64,7 +73,9 @@ class ClassController extends Controller
             $select['coursenameStudent']=$request->coursenameStudent;
             $userid=Auth::user()->id;
             $courseid=Course::where('coursename',$request->coursenameStudent)->first()->id;
-            UserCourse::create(['user_id'=>$userid,'course_id'=>$courseid]);
+            if(UserCourse::where('user_id',$userid)->where('course_id',$courseid)->first() == null){
+                UserCourse::create(['user_id'=>$userid,'course_id'=>$courseid]);
+            }
             return redirect('/home');
         }
     }
@@ -134,5 +145,16 @@ class ClassController extends Controller
             $dontUnderstand->save();
         }
         return null;
+    }
+    public function getDeleteCourse($courseid){
+        if(Auth::user()->position=="Instructor"){
+            $course = Course::where('id',$courseid)->first();
+            $course -> delete();
+        }
+        else{
+            $relation = UserCourse::where('user_id',Auth::user()->id)->where('course_id',$courseid)->first();
+            $relation -> delete();
+        }
+        return redirect('/home');
     }
 }

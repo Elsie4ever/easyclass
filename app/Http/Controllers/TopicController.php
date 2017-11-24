@@ -14,7 +14,7 @@ class TopicController extends Controller
 {
     public function topicLikeTopic(Request $request){
         $topic_id=$request['topicId'];
-        $liked=$request['liked']==='true'?true:false;
+        $liked=$request['likedd']==='true'?true:false;
         $update = false;
         $topic = Topic::find($topic_id);
         if(!$topic){
